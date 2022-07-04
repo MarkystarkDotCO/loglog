@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+  epwatch-logstash:
+    ports:
+      - "6514:6514/udp"
+      - "6514:6514/tcp"
+      - "9600:9600"
+    # volumes:
+    #   - .:/app
+    build: .
+    image: epwatch.azurecr.io/epwatch-logstash-prd
+    environment:
+      LOGSTASH_OUTPUT: /mnt/shared-log/logstash
+      CONTAINER_ID: logstash-2
+    volumes:
+      - /mnt/shared-log/logstash:/mnt/shared-log/logstash
+    stdin_open: true
+    tty: true
+    restart: always
